@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>路由</title>
+</head>
+<body>
+  <style>
+    x-tab{ display: block; }
+    x-tab > .nav > li.active{ background: red; }
+    x-tab > .content > li{ display: none; }
+    x-tab > .content > li.active{ display: block; }
+  </style>
+  <x-tab>
+    <ol class="nav">
+      <li class="active"><a href="./tab1">tab 1</a></li>
+      <li><a href="./tab2">tab 2</a></li>
+    </ol>
+    <ol class="content">
+      <li class="active">content 1</li>
+      <li>content 2</li>
+    </ol>
+  </x-tab>
+  <a href="/xxx">xxx</a>
+  <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    selectTab()
+
+    $('x-tab').on('click', '.nav > li > a', (e)=>{
+      e.preventDefault()
+      let a = e.currentTarget
+      let path = a.getAttribute('href')
+      window.history.pushState({}, 'xxx', path) // 1
+      selectTab()
+    })
+
+    // 下面不看
+    function selectTab(){
+      let index = location.pathname.substring(1) || 'tab1'
+      index = index.substring(3)
+      /*$('x-tab > .nav > li').eq(index-1).addClass('active')
+        .siblings().removeClass('active')
+      $('x-tab > .content > li').eq(index-1).addClass('active')
+        .siblings().removeClass('active')*/
+      index = index - 0
+      if(index === 1){
+        $('x-tab > .nav > li').eq(0).addClass('active')
+          .siblings().removeClass('active')
+        $('x-tab > .content > li').eq(0).addClass('active')
+          .siblings().removeClass('active')
+      } else if(index === 2){
+        $('x-tab > .nav > li').eq(1).addClass('active')
+          .siblings().removeClass('active')
+        $('x-tab > .content > li').eq(1).addClass('active')
+          .siblings().removeClass('active')
+      }
+    }
+
+  </script>
+</body>
+</html>
